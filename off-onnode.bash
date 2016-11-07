@@ -48,8 +48,9 @@ url=$(echo "${JENKINS_URL}"'computer/api/xml?tree=computer[displayName,offline]{
 #Install xmllint
 if which xmllint > /dev/null
 then
-	curl --netrc -g "$url"
-	curl --silent --netrc -g "$url" | xmllint --format - | egrep 'displayName|offline' | awk -F'<|>' '{print $3}' | paste - - > ${WORKSPACE}/nodes
+	#replace user and password with your jenkins username and password for authentication.
+	curl -u user:password --netrc -g "$url"
+	curl -u user:password --silent --netrc -g "$url" | xmllint --format - | egrep 'displayName|offline' | awk -F'<|>' '{print $3}' | paste - - > ${WORKSPACE}/nodes
 else
 	error "xmllint is not installed. Please install libxml2-utils package"
 fi
