@@ -50,7 +50,7 @@ if which xmllint > /dev/null
 then
 	#replace user and password with your jenkins username and password for authentication.
 	curl -u user:password --netrc -g "$url"
-	curl -u user:password --silent --netrc -g "$url" | xmllint --format - | egrep 'displayName|offline' | awk -F'<|>' '{print $3}' | paste - - > ${WORKSPACE}/nodes
+	curl -u user:password --silent -g "$url" | xmllint --format - | egrep 'displayName|offline' | awk -F'<|>' '{print $3}' | paste - - > ${WORKSPACE}/nodes
 else
 	error "xmllint is not installed. Please install libxml2-utils package"
 fi
